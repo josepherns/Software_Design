@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/style.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Inventory System</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+
+
+     <li>
+      <a href="#">
+        <i class='bx bx-pie-chart-alt-2' ></i>
+        <span class="links_name">Analytics</span>
+      </a>
+      <span class="tooltip">Analytics</span>
+    </li>
+
+
+
+
+
+
+     <li>
+       <a href="#">
+        <i class='bx bx-shopping-bag'></i>
+         <span class="links_name">Products</span>
+       </a>
+       <span class="tooltip">Products</span>
+     </li>
+
+
+
+
+ 
+
+     <li>
+       <a href="#">
+         <i class='bx bx-cart-alt' ></i>
+         <span class="links_name">Orders</span>
+       </a>
+       <span class="tooltip">Orders</span>
+     </li>
+
+
+     <li>
+      <a href="#">
+        <i class='bx bx-user' ></i>
+        <span class="links_name">About Us</span>
+      </a>
+      <span class="tooltip">About Us</span>
+    </li>
+
+
+     <li>
+       <a href="#">
+         <i class='bx bx-cog' ></i>
+         <span class="links_name">Setting</span>
+       </a>
+       <span class="tooltip">Setting</span>
+     </li>
+
+     <li class="profile">
+         <div class="profile-details">
+           <!--<img src="profile.jpg" alt="profileImg">-->
+           <div class="name_job">
+             <div class="name">User Name</div>
+             <div class="job">log_out</div>
+           </div>
+         </div>
+         <i class='bx bx-log-out' id="log_out" ></i>
+     </li>
+    </ul>
+   </div>
+
+
+  <section class="home-section">
+      <div class="text">Dashboard</div>
+        
+       <main>
+
+      <div class="insights">
+        <div class="sales">
+          <span class='bx bx-bar-chart' ></span>
+          <div class="middle">
+            <div class="left">
+              <h3> Total Sales </h3>
+              <h1> $50,000</h1>
+            </div>
+          <div class="progress">
+           <svg>
+             <circle cx='38' cy='38' r='36'></circle>
+           </svg>
+           <div class="number">
+             <p>50%</p>
+           </div>
+          </div>
+        </div>
+          <small class="text-muted">last 15 Hours</small>
+      </div>    
+
+        <div class="expenses">
+          <span class='bx bx-bar-chart' ></span>
+         <div class="middle">
+            <div class="left">
+             <h3> Total Expenses </h3>
+              <h1> $35,000</h1>
+           </div>
+        <div class="progress">
+         <svg>
+           <circle cx='38' cy='38' r='36'></circle>
+         </svg>
+         <div class="number">
+           <p>50%</p>
+         </div>
+        </div>
+      </div>
+        <small class="text-muted">last 15 Hours</small>
+    </div>
+
+
+       <div class="Income">
+          <span class='bx bx-bar-chart' ></span>
+        <div class="middle">
+           <div class="left"></div>
+            <div class="middle">
+              <div class="left">
+                <h3> Total Income </h3>
+               <h1> $12,121</h1>
+              </div>
+        <div class="progress">
+           <svg>
+              <circle cx='38' cy='38' r='36'></circle>
+            </svg>
+           <div class="number">
+            <p>62%</p>
+           </div>
+          </div>
+        </div>
+           <small class="text-muted">last 24 Hours</small>
+      </div>
+
+      
+
+    
+       </main>
+  </section>
+  <script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+
+  closeBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+
+  searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+    sidebar.classList.toggle("open");
+    menuBtnChange(); //calling the function(optional)
+  });
+
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+   if(sidebar.classList.contains("open")){
+     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+   }else {
+     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+   }
+  }
+  </script>
+</body>
+</html>
