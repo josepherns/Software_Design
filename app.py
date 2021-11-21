@@ -3,6 +3,7 @@ from flask import request
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -32,7 +33,26 @@ class AccountsMeta(ma.Schema):
 account_meta = AccountsMeta()
 accounts_meta = AccountsMeta(many = True)
 
+class Products(db.Model):
+    __tablename__="product"
+    barcode = db.Column(db.Integer,primary_key=True)
+    product = db.Column(db.String(50), nullable = False)
+    status = db.Column(db.String(50), nullable = False)
+    date = db.Column(db.DateTime, nullable = False)
+    quantity = db.Column(db.Integer, nullable = False)
+    def __init__(self,barcode,product,status,date,quantity):
+        self.barcode = barcode
+        self.product = product
+        self.status = status
+        self.date = date
+        self.quantity = quantity
 
+class ProductsMeta(ma.Schema):
+    class Meta:
+        fields = ("barcode","product","status","date","quantity")
+
+product_meta = ProductsMeta()
+products_meta = ProductsMeta(many = True)
 
 @app.route("/")
 def main():
@@ -79,8 +99,16 @@ def signup_form():
             db.session.add(new_account)
             db.session.commit()
             return redirect(url_for('main'))
-    
 
+@app.route('/Product')
+def product():
+    return render_template("products.html")
+
+
+@app.route('/product_form', methods=['GET','POST'])
+def product_form():
+    if request.method == 'POST':
+        print("HI")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
