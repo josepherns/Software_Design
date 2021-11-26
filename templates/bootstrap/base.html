@@ -8,6 +8,44 @@
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .modal-backdrop {
+    display: none;
+    z-index: 1040 !important;
+    }
+
+        .modal-content {
+    margin: 2px auto;
+    z-index: 1100 !important;
+    }
+    #containerr {
+    padding-top: 5%;
+    padding-right: 10%;
+    }
+    .center{
+    margin-left: auto;
+    margin-right: auto;
+    width:40%;
+    }
+    tbody,td,thead,th{
+        border-top-style: solid;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-bottom-style: solid;
+    }
+    td,thead,th{
+    text-align: center;
+    vertical-align: middle;
+    border-right-style: solid;
+    border-top-style: solid;
+    width:10%;
+    }
+    </style>
      {% endblock %}
    </head>
 <body>{% block sidebar %}
@@ -20,11 +58,11 @@
 
 
      <li>
-      <a href="#">
-        <i class='bx bx-pie-chart-alt-2' ></i>
-        <span class="links_name">Analytics</span>
+      <a href="{{url_for('Homepage')}}">
+        <i class='bx bx-home' ></i>
+        <span class="links_name">Home</span>
       </a>
-      <span class="tooltip">Analytics</span>
+      <span class="tooltip">Home</span>
     </li>
 
 
@@ -33,7 +71,7 @@
 
 
      <li>
-       <a href="Product">
+       <a href="{{url_for('product')}}">
         <i class='bx bx-shopping-bag'></i>
          <span class="links_name">Products</span>
        </a>
@@ -46,7 +84,7 @@
  
 
      <li>
-       <a href="#">
+       <a href="{{url_for('orders')}}">
          <i class='bx bx-cart-alt' ></i>
          <span class="links_name">Orders</span>
        </a>
@@ -55,21 +93,13 @@
 
 
      <li>
-      <a href="#">
+      <a href="{{url_for('about_us')}}">
         <i class='bx bx-user' ></i>
         <span class="links_name">About Us</span>
       </a>
       <span class="tooltip">About Us</span>
     </li>
 
-
-     <li>
-       <a href="#">
-         <i class='bx bx-cog' ></i>
-         <span class="links_name">Setting</span>
-       </a>
-       <span class="tooltip">Setting</span>
-     </li>
 
      <li class="profile">
          <div class="profile-details">

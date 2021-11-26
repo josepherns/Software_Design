@@ -6,7 +6,90 @@
   </style>
 {% endblock %}
 {% block content %}
-  <h1>Index</h1>
-  <p class="important">
-    Welcome on my awesome homepage.
+
+
+
+
+<!-- Button trigger modal -->
+<div class="row" id="containerr">
+    <div class = "col pull-right">
+        <button type="button" id="Product_Button" name="Product_Button" class="btn btn-primary" data-toggle="modal" data-target="#product_modal">
+            Add Product
+        </button>
+    </div>
+</div>
+
+
+
+<table class="table table-hover center">
+  <thead>
+    <tr>
+    <th scope="col">Barcode</th>
+    <th scope="col">Product</th>
+    <th scope="col">Status</th>
+    <th scope="col">Quantity</th>
+</tr>
+</thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.barcode }}</a></td>
+        <td>{{ row.product }}</td>
+        <td>{{ row.status }}</td>
+        <td>{{ row.quantity }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="product_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Add_Product_Title">Add Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+            <div class="modal-body">
+        <form method="POST" action=/product_form>
+            <div class="form-group">
+                <label for="Barcode_Input">Barcode</label>
+                    <input type="text" class="form-control" id="Barcode_Input" name="Barcode_Input" placeholder="Barcode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Product_Input">Product</label>
+                            <input type="text" class="form-control" id="Product_Input" name="Product_Input" placeholder="Product" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="Status_Input">Status</label>
+                            <input type="text" class="form-control" id="Status_Input" name="Status_Input" placeholder="Status" required>
+                            </div>
+                        <div class="form-group">
+                    <label for="Quantity_Input">Quantity</label>
+                <input type="number" class="form-control" id="Quantity_Input" name="Quantity_Input" placeholder="Quantity" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" onclick="product_form();">Confirm</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  
 {% endblock %}
+
+<script>
+    $(document).ready(function () {
+        $("#product_modal").on("click", function () {
+            $('#product_modal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+    });
+</script>
