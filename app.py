@@ -125,19 +125,6 @@ def product_form():
         return redirect(url_for('product'))
 
 
-@app.route('/Product_update/<id>/Update', methods = ['GET', 'POST'])
-def Product_update(id):
-    productss = Products.query.get(id)
-    if request.method == 'POST':
-        if productss:
-            db.session.delete(product)
-            db.session.commit()
-
-            product.Product=request.form.get("Update_Product2")
-            product.Status=request.form.get("Update_Status")
-            product.Quantity=request.form.get("Update_Quantity")
-            db.session.commit() 
-    return redirect(url_for('product', productss = productss))
 
 @app.route('/Product/<id>/Delete', methods=['GET','POST'])
 def delete(id):
@@ -146,5 +133,23 @@ def delete(id):
     db.session.commit()
     return redirect(url_for('product'))
 
+
+@app.route('/Product/<id>/Update',methods=['GET','POST'])
+def update(id):
+    bar=Products.query.get(id)
+    #bar=Products.query.filter_by(barcode=id).first()
+    if request.method == 'POST':
+        if bar:
+            db.session.delete(bar)
+            db.session.commit()
+
+            produc=request.form["Update_Product"]
+            statu=request.form["Update_Status"]
+            quantit=request.form["Update_Quantity"]
+
+            bar=Products(barcode=id,product=produc,status=statu,quantity=quantit)
+            db.session.add(bar)
+            db.session.commit()
+            return redirect(url_for('product'))
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
