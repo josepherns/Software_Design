@@ -21,28 +21,73 @@
 
 
 
-<table class="table table-hover center">
+<table class="table table-hover center" >
   <thead>
     <tr>
     <th scope="col">Barcode</th>
     <th scope="col">Product</th>
     <th scope="col">Status</th>
     <th scope="col">Quantity</th>
+    <th scope="col">Update/Delete</th>
 </tr>
 </thead>
     <tbody>
       {% for row in rows %}
       <tr>
-        <td>{{ row.barcode }}</a></td>
+        <td>{{ row.barcode }}</td>
         <td>{{ row.product }}</td>
         <td>{{ row.status }}</td>
         <td>{{ row.quantity }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        <td>
 
+          <a  href="/Product_update/{{row.barcode}}" type="button" class = "btn btn-warning" id="Update_Button" name ="Update_Button" data-toggle="modal" data-target="#update_modal">Update</button>
+          <a href="/Product/{{ row.barcode }}/Delete" type="button" class = "btn btn-danger"id="Delete_Button" name = "Delete_Button">Delete</a>
+          
+  <div class="modal fade" id="update_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Update_Product11">Update Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+            <div class="modal-body">
+          <form method="POST" action=/Product_update>
+            <div class="form-group">
+              <label for="Update_Barcode">Barcode</label>
+              <input type="text" class="form-control" id="Update_Barcode" name="Update_Barcode" readonly>
+        </div>
+          <div class="form-group">
+                            <label for="Update_Product2">Update Product</label>
+                            <input type="text" class="form-control" id="Update_Product2" name="Update_Product2" placeholder="Update Product"required>
+                      </div>
+                        <div class="form-group">
+                            <label for="Update_Status">Status</label>
+                            <input type="text" class="form-control" id="Update_Status" name="Update_Status" placeholder="Update Status"  required>
+                            </div>
+                        <div class="form-group">
+                    <label for="Update_Quantity">Quantity</label>
+                <input type="number" class="form-control" id="Update_Quantity" name="Quantity_Input" placeholder="Update Quantity" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="/Product_update/{{row.barcode}}/Update" type="submit" class = "btn btn-primary" id="Update_Confirm" name ="Update_Confirm">Confirm</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+      </tr>
+      
+    </tbody>
+    
+  </table>
   
+  {% endfor %}
+
+
   <!-- Modal -->
   <div class="modal fade" id="product_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -79,6 +124,7 @@
       </div>
     </div>
   </div>
+</div>
 
 
   
