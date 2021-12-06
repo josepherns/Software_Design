@@ -123,33 +123,35 @@ def product_form():
         db.session.add(productss)
         db.session.commit()
         return redirect(url_for('product'))
-
-
-
-@app.route('/Product/<id>/Delete', methods=['GET','POST'])
-def delete(id):
-    product=Products.query.get(id)
-    db.session.delete(product)
+#this is our update route where we are going to update our Product
+@app.route('/Product_update', methods = ['GET', 'POST'])
+def Product_update():
+ 
+    if request.method == 'POST':
+        rows = Products.query.get(request.form.get('id'))
+ 
+        rows.Barcode=request.form.get("Barcode_Edit")
+        rows.Product=request.form.get("Product_Edit")
+        rows.Status=request.form.get("Status_Edit")
+        rows.Quantity=request.form.get("Quantity_Edit")
+        db.session.commit() 
+        return redirect(url_for('product'))
+ 
+ 
+ 
+ 
+#This route is for deleting our product
+@app.route('/Product_delete/<id>/', methods = ['GET', 'POST'])
+def Product_delete(id):
+    rows = Products.query.get(id)
+    db.session.delete(rows)
     db.session.commit()
+    
+ 
     return redirect(url_for('product'))
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
 
-@app.route('/Product/<id>/Update',methods=['GET','POST'])
-def update(id):
-    bar=Products.query.get(id)
-    #bar=Products.query.filter_by(barcode=id).first()
-    if request.method == 'POST':
-        if bar:
-            db.session.delete(bar)
-            db.session.commit()
-
-            produc=request.form["Update_Product"]
-            statu=request.form["Update_Status"]
-            quantit=request.form["Update_Quantity"]
-
-            bar=Products(barcode=id,product=produc,status=statu,quantity=quantit)
-            db.session.add(bar)
-            db.session.commit()
-            return redirect(url_for('product'))
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)

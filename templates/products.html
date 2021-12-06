@@ -18,74 +18,71 @@
         </button>
     </div>
 </div>
+<table class="table table-hover center">
+    <thead>
+        <tr>
+        <th scope="col">Barcode</th>
+        <th scope="col">Product</th>
+        <th scope="col">Status</th>
+        <th scope="col">Quantity</th>
+         <th scope="col">Action</th>
+    </tr>
+    </thead>
+</table>
+{% for row in rows %}
 
 
 
-<table class="table table-hover center" >
-  <thead>
-    <tr>
-    <th scope="col">Barcode</th>
-    <th scope="col">Product</th>
-    <th scope="col">Status</th>
-    <th scope="col">Quantity</th>
-    <th scope="col">Update/Delete</th>
-</tr>
-</thead>
+<table class="table table-hover center">
     <tbody>
-      {% for row in rows %}
       <tr>
-        <td>{{ row.barcode }}</td>
+        <td>{{ row.barcode }}</a></td>
         <td>{{ row.product }}</td>
         <td>{{ row.status }}</td>
         <td>{{ row.quantity }}</td>
+
         <td>
-          <a href="/Product/{{ row.barcode }}/Update" type="button" class = "btn btn-warning"id="Update_Button" name = "Update_Button"data-toggle="modal" data-target="#update_{{row.barcode}}">Update</a>
-          <a href="/Product/{{ row.barcode }}/Delete" type="button" class = "btn btn-danger"id="Delete_Button" name = "Delete_Button">Delete</a>
-          <div class="modal fade" id="update_{{row.barcode}}" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="update_Product_Title">Update Product</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                    <div class="modal-body">
-                <form method="POST" action=/Product/{{row.barcode}}/Update>
-                    <div class="form-group">
-                        <label for="Update_Barcode">Barcode</label>
-                            <input type="text" class="form-control" id="Update_Barcode" name="Update_Barcode" value={{row.barcode}} readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Update_Product">Product</label>
-                                    <input type="text" class="form-control" id="Update_Product" name="Update_Product" placeholder="Product" value={{row.product}} required>
-                                    </div>
-                                    <div class="form-group">
-                                    <label for="Update_Status">Status</label>
-                                    <input type="text" class="form-control" id="Update_Status" name="Update_Status" placeholder="Status" value={{row.status}} required>
-                                    </div>
-                                <div class="form-group">
-                            <label for="Update_Quantity">Quantity</label>
-                        <input type="number" class="form-control" id="Update_Quantity" name="Update_Quantity" placeholder="Quantity" value={{row.quantity}} required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" >Confirm</button>
-                    </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+          <a href="/Product_update/{{row.barcode}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#product_modaledit{{row.barcode}}">Edit</a>
+          <a href="/Product_delete/{{row.barcode}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+
+
+      </td>
       </tr>
-      {% endfor %}
     </tbody>
-    
+       <!-- Modal EDIT-->
+  <div class="modal fade" id="product_modaledit{{row.barcode}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Add_Product_Title">Update Product</h5>
+        </div>
+            <div class="modal-body">
+        <form method="POST" action=/Product_update>
+            <div class="form-group">
+                <label for="Barcode_Edit">Barcode</label>
+                <input type="hidden"  name="id" value="{{row.barcode}}">
+                    <input type="text" class="form-control" id="Barcode_Edit" name="Barcode_Edit" value="{{row.barcode}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="Product_Edit">Product</label>
+                            <input type="text" class="form-control" id="Product_Edit" name="Product_Edit"value="{{row.product}}">
+                            </div>
+                            <div class="form-group">
+                            <label for="Status_Edit">Status</label>
+                            <input type="text" class="form-control" id="Status_Edit" name="Status_Edit" value="{{row.status}}">
+                            </div>
+                        <div class="form-group">
+                    <label for="Quantity_Edit">Quantity</label>
+                <input type="number" class="form-control" id="Quantity_Edit" name="Quantity_Edit" value="{{row.quantity}}">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" onclick="Product_update();">Update</button>
+            </div>
+        </form>
   </table>
+{% endfor %}
   
-  
-
-
   <!-- Modal -->
   <div class="modal fade" id="product_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -122,7 +119,6 @@
       </div>
     </div>
   </div>
-</div>
 
 
   
