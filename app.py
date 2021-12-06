@@ -73,13 +73,14 @@ def login_form():
         if username2 != "" and password2 != "":
             Check = Accounts.query.filter_by(username=username2).first()
             if Check is None:
-                return redirect(url_for('main'))
+                msg="No_Such_Account"
+                return redirect(url_for('main',msg=msg))
             if Check.username == username2 and Check.password == password2:
                 session["name"] = request.form.get("Login_Username")
                 msg="Successfully_Logged_In"
                 return redirect(url_for('Homepage',msg=msg))
             else:
-                msg="No_such_account"
+                msg="Wrong_Password"
                 return redirect(url_for('main',msg=msg))
         else:
             msg="Wrong_Username_and_Password"
