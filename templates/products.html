@@ -54,7 +54,7 @@
                 <form method="POST" action=/Product/{{row.barcode}}/Update>
                     <div class="form-group">
                         <label for="Update_Barcode">Barcode</label>
-                            <input type="text" class="form-control" id="Update_Barcode" name="Update_Barcode" value={{row.barcode}} readonly>
+                            <input type="number" class="form-control" id="Update_Barcode" name="Update_Barcode" value={{row.barcode}} readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="Update_Product">Product</label>
@@ -100,7 +100,7 @@
         <form method="POST" action=/product_form>
             <div class="form-group">
                 <label for="Barcode_Input">Barcode</label>
-                    <input type="text" class="form-control" id="Barcode_Input" name="Barcode_Input" placeholder="Barcode" required>
+                    <input type="number" class="form-control" id="Barcode_Input" name="Barcode_Input" placeholder="Barcode" required>
                         </div>
                         <div class="form-group">
                             <label for="Product_Input">Product</label>
