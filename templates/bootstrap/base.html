@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% block title %}{% endblock %}
+    <meta charset="UTF-8">
+    {% block styles %}
+    <link rel="stylesheet" href="static/style.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .modal-backdrop {
+    display: none;
+    z-index: 1040 !important;
+    }
+
+        .modal-content {
+    margin: 2px auto;
+    z-index: 1100 !important;
+    }
+    #containerr {
+    padding-top: 5%;
+    padding-right: 10%;
+    }
+    .center{
+    margin-left: auto;
+    margin-right: auto;
+    width:40%;
+    }
+    tbody,td,thead,th{
+        border-top-style: solid;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-bottom-style: solid;
+    }
+    td,thead,th{
+    text-align: center;
+    vertical-align: middle;
+    border-right-style: solid;
+    border-top-style: solid;
+    width:10%;
+    }
+    </style>
+     {% endblock %}
+   </head>
+<body>{% block sidebar %}
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Inventory</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+
+
+     <li>
+      <a href="{{url_for('Homepage')}}">
+        <i class='bx bx-home' ></i>
+        <span class="links_name">Home</span>
+      </a>
+      <span class="tooltip">Home</span>
+    </li>
+
+
+
+
+
+
+     <li>
+       <a href="{{url_for('product')}}">
+        <i class='bx bx-shopping-bag'></i>
+         <span class="links_name">Products</span>
+       </a>
+       <span class="tooltip">Products</span>
+     </li>
+
+
+
+
+ 
+
+     <li>
+       <a href="{{url_for('orders')}}">
+         <i class='bx bx-cart-alt' ></i>
+         <span class="links_name">Orders</span>
+       </a>
+       <span class="tooltip">Orders</span>
+     </li>
+
+     <li>
+      <a href="{{url_for('supplier')}}">
+        <i class='bx bx-user' ></i>
+        <span class="links_name">Suppliers</span>
+      </a>
+      <span class="tooltip">Suppliers</span>
+    </li>
+
+     <li>
+      <a href="{{url_for('about_us')}}">
+        <i class='bx bx-user' ></i>
+        <span class="links_name">About Us</span>
+      </a>
+      <span class="tooltip">About Us</span>
+    </li>
+
+
+
+     <li class="profile">
+         <div class="profile-details">
+           <!--<img src="profile.jpg" alt="profileImg">-->
+           <div class="name_job">
+             <div class="name">User Name</div>
+             <div class="job">log_out</div>
+           </div>
+         </div>
+         <a href="{{url_for('logout')}}">
+         <i class='bx bx-log-out' id="log_out" ></i>
+        </a>
+     </li>
+    </ul>
+   </div>
+   {% endblock %}
+   <section class="home-section">{% block content %}{% endblock %}</section>
+   {% block scripts %}
+  <script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+
+  closeBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+
+  searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+    sidebar.classList.toggle("open");
+    menuBtnChange(); //calling the function(optional)
+  });
+
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+   if(sidebar.classList.contains("open")){
+     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+   }else {
+     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+   }
+  }
+  </script>
+  {% endblock %}
+</body>
+</html>

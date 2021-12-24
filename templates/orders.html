@@ -1,0 +1,32 @@
+{% extends "bootstrap/base.html" %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1>Orders</h1>
+  <p class="important">
+    Orders
+{% endblock %}
+
+<table>
+  {% for row in rows %}
+  <tr>
+    <th>Company</th>
+    <th>Contact</th>
+    <th>Country</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+  {% endfor %}
+</table>

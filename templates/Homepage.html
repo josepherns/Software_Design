@@ -1,0 +1,85 @@
+{% extends "bootstrap/base.html" %}
+{% block head %}
+{% endblock %}
+{% block content %}
+      <div class="text"> CLAY QUEEN POLYMER CLAY Dashboard</div>
+       <main>
+      <div class="insights">
+        <div class="sales">
+          <span class='bx bx-bar-chart' ></span>
+          <div class="middle">
+            <div class="left">
+              <h3> Total Sales </h3>
+              <h1> (Total Sales nila)</h1>
+            </div>
+        <!---  <div class="progress">
+           <svg>
+             <circle cx='38' cy='38' r='36'></circle>
+           </svg>
+           <div class="number">
+             <p>50%</p>
+           </div> --->
+          </div>
+        </div>
+          <small class="text-muted"> (How many days) </small>
+      </div>    
+
+        <div class="expenses">
+          <span class='bx bx-bar-chart' ></span>
+         <div class="middle">
+            <div class="left">
+             <h3> Total Expenses </h3>
+              <h1> (Total Expenses) </h1>
+           </div>
+        <!--- <div class="progress">
+         <svg>
+           <circle cx='48' cy='48' r='46'></circle>
+         </svg>
+         <div class="number">
+           <p>50%</p>
+         </div> --->
+        </div>
+      </div>
+        <small class="text-muted"> (How many days) </small>
+    </div>
+
+<!---
+       <div class="Income">
+          <span class='bx bx-bar-chart' ></span>
+        <div class="middle">
+           <div class="left"></div>
+            <div class="middle">
+              <div class="left">
+                <h3> Total Income </h3>
+               <h1> $12,121</h1>
+              </div>
+        <div class="progress">
+           <svg>
+              <circle cx='38' cy='38' r='36'></circle>
+            </svg>
+           <div class="number">
+            <p>62%</p>
+           </div>
+          </div>
+        </div>
+           <small class="text-muted">last 24 Hours</small>
+      </div>
+--->
+      <div class="row" id="containerr">
+        <div class = "col pull-right">
+          <button type="button" id="Generate_Barcode" name="Product_Button" class="btn btn-primary" data-toggle="modal" data-target="#product_modal">
+            Generate Barcode
+          </button>
+        </div>
+      </div>
+
+      <div class="row" id="containerr">
+        <div class = "col pull-right">
+          <button type="button" id="Scan_Barcode" name="Product_Button" class="btn btn-primary" data-toggle="modal" data-target="#product_modal">
+            Scan Barcode
+          </button>
+        </div>
+      </div>
+
+       </main>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "bootstrap/base.html" %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+
+
+
+
+<!-- Button trigger modal -->
+<div class="row" id="containerr">
+    <div class = "col pull-right">
+        <button type="button" id="Product_Button" name="Product_Button" class="btn btn-primary" data-toggle="modal" data-target="#product_modal">
+            Add Product
+        </button>
+    </div>
+</div>
+
+
+
+<table class="table table-hover center" >
+  <thead>
+    <tr>
+    <th scope="col">Barcode</th>
+    <th scope="col">Product</th>
+    <th scope="col">Status</th>
+    <th scope="col">Quantity</th>
+    <th scope="col">Update/Delete</th>
+</tr>
+</thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.barcode }}</td>
+        <td>{{ row.product }}</td>
+        <td>{{ row.status }}</td>
+        <td>{{ row.quantity }}</td>
+        <td>
+          <a href="/Product/{{ row.barcode }}/Update" type="button" class = "btn btn-warning"id="Update_Button" name = "Update_Button"data-toggle="modal" data-target="#update_{{row.barcode}}">Update</a>
+          <a href="/Product/{{ row.barcode }}/Delete" type="button" class = "btn btn-danger"id="Delete_Button" name = "Delete_Button">Delete</a>
+          <div class="modal fade" id="update_{{row.barcode}}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="update_Product_Title">Update Product</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                    <div class="modal-body">
+                <form method="POST" action=/Product/{{row.barcode}}/Update>
+                    <div class="form-group">
+                        <label for="Update_Barcode">Barcode</label>
+                            <input type="number" class="form-control" id="Update_Barcode" name="Update_Barcode" value={{row.barcode}} readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Update_Product">Product</label>
+                                    <input type="text" class="form-control" id="Update_Product" name="Update_Product" placeholder="Product" value={{row.product}} required>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="Update_Status">Status</label>
+                                    <input type="text" class="form-control" id="Update_Status" name="Update_Status" placeholder="Status" value={{row.status}} required>
+                                    </div>
+                                <div class="form-group">
+                            <label for="Update_Quantity">Quantity</label>
+                        <input type="number" class="form-control" id="Update_Quantity" name="Update_Quantity" placeholder="Quantity" value={{row.quantity}} required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" >Confirm</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
+      {% endfor %}
+    </tbody>
+    
+  </table>
+  
+  
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="product_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Add_Product_Title">Add Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+            <div class="modal-body">
+        <form method="POST" action=/product_form>
+            <div class="form-group">
+                <label for="Barcode_Input">Barcode</label>
+                    <input type="number" class="form-control" id="Barcode_Input" name="Barcode_Input" placeholder="Barcode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Product_Input">Product</label>
+                            <input type="text" class="form-control" id="Product_Input" name="Product_Input" placeholder="Product" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="Status_Input">Status</label>
+                            <input type="text" class="form-control" id="Status_Input" name="Status_Input" placeholder="Status" required>
+                            </div>
+                        <div class="form-group">
+                    <label for="Quantity_Input">Quantity</label>
+                <input type="number" class="form-control" id="Quantity_Input" name="Quantity_Input" placeholder="Quantity" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" onclick="product_form();">Confirm</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
+{% endblock %}
+
+<script>
+    $(document).ready(function () {
+        $("#product_modal").on("click", function () {
+            $('#product_modal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+    });
+</script>
