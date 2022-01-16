@@ -26,11 +26,26 @@
     <tbody>
       {% for row in rows %}
       <tr>
-        <td>{{ row.barcode }}</td>
+        <td><a href="#Multiple_Img_{{ rows.barcode }}" name="Multiple_Img" id="Multiple_Img" data-toggle="modal" data-target="#Multiple_Img_{{rows.barcode}}">{{ row.barcode }}</a></td>
         <td>{{ row.product }}</td>
         <td>{{ row.status }}</td>
         <td>{{ row.quantity }}</td>
       </tr>
+      <div class="modal fade" id="Multiple_Img_{{rows.barcode}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Multiple_Img_Title">Barcode Image</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+                <div class="modal-body">
+                        <img src='static/barcode/{{ row.barcode }}.jpeg' width="100%">
+          </div>
+        </div>
+      </div>
+      </div>
       {% endfor %}
     </tbody>
     
@@ -49,4 +64,14 @@
             $('.modal-backdrop').remove();
         });
     });
+</script>
+
+<script>
+  $(document).ready(function () {
+      $("#Sub_Button").on("click", function () {
+          $('#Sub_Button').modal('hide');
+          $('body').removeClass('modal-open');
+          $('.modal-backdrop').remove();
+      });
+  });
 </script>
