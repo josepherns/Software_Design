@@ -1,0 +1,139 @@
+{% extends "bootstrap/base.html" %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1>Profile</h1>
+  <p class="important">
+    <div class="row" id="containerr">
+      <div class = "col center">
+
+        <table class="table table-hover center" >
+            <thead>
+              <tr>
+              <th scope="col">Barcode</th>
+              <th scope="col">Product</th>
+              <th scope="col">Status</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Multiple Add</th>
+              <th scope="col">Add</th>
+              <th scope="col">Multiple Subtract</th>
+              <th scope="col">Subtract</th>
+          </tr>
+          </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#Multiple_Img_{{ rows.barcode }}" name="Multiple_Img" id="Multiple_Img" data-toggle="modal" data-target="#Multiple_Img_{{rows.barcode}}">{{ rows.barcode }}</a></td>
+                  <td>{{ rows.product }}</td>
+                  <td>{{ rows.status }}</td>
+                  <td>{{ rows.quantity }}</td>
+                  <td><a href="/Profile/{{ rows.barcode }}/Multiple_Add" type="button" class = "btn btn-warning"id="Multiple_Button" name = "Multiple_Button"data-toggle="modal" data-target="#Multiple_{{rows.barcode}}">Multiple Add</a></td>
+                  <td><a href="/Profile/{{ rows.barcode }}/Add" type="button" class = "btn btn-warning"id="Add_Button" name = "Add_Button">+</a></td>
+                  <td><a href="/Profile/{{ rows.barcode }}/Multiple_Sub" type="button" class = "btn btn-warning"id="Sub_Button" name = "Sub_Button"data-toggle="modal" data-target="#Multiple_Sub_{{rows.barcode}}">Multiple Sub</a></td> 
+                  <td><a href="/Profile/{{ rows.barcode }}/Sub" type="button" class = "btn btn-danger"id="Sub_Button" name = "Sub_Button">-</a></td>
+                </tr>
+              </tbody>
+              
+            </table>
+            <div class="modal fade" id="Multiple_{{rows.barcode}}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="Multiple_Product_Title">Multiple Adding</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                        <div class="modal-body">
+                    <form method="POST" action=/Profile/{{rows.barcode}}/Multiple_Add>
+                                    <div class="form-group">
+                                <label for="Update_Quantity">Add Quantity</label>
+                            <input type="number" class="form-control" id="Mul_Quantity" name="Mul_Quantity" placeholder="Quantity" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" >Add</button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="Multiple_Sub_{{rows.barcode}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Multiple_Sub_Title">Multiple Subtracting</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+                <div class="modal-body">
+            <form method="POST" action=/Profile/{{rows.barcode}}/Multiple_Sub>
+                            <div class="form-group">
+                        <label for="Sub_Quantity">Sub Quantity</label>
+                    <input type="number" class="form-control" id="Mul_Sub_Quantity" name="Mul_Sub_Quantity" placeholder="Quantity" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" >Sub</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="Multiple_Img_{{rows.barcode}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Multiple_Img_Title">Barcode Image</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+                <div class="modal-body">
+                        <img src='static/barcode/{{ rows.barcode }}.jpeg' width="100%">
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+<script>
+    $(document).ready(function () {
+        $("#Multiple_Button").on("click", function () {
+            $('#Multiple_Button').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+    });
+  </script>
+
+<script>
+    $(document).ready(function () {
+        $("#Multiple_Img").on("click", function () {
+            $('#Multiple_Img').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+    });
+  </script>
+<script>
+    $(document).ready(function () {
+        $("#Sub_Button").on("click", function () {
+            $('#Sub_Button').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+    });
+  </script>

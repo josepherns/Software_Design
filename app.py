@@ -2,7 +2,13 @@ from flask import Flask,redirect,url_for,request,render_template,session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from barcode import Code128
+from barcode.writer import ImageWriter
+import io, cv2
+import numpy as np
 from datetime import datetime
+from pyzbar.pyzbar import decode
+
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -14,6 +20,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+
+def yes(self):
+    self.yepyep="a"
 
 class Accounts(db.Model):
     __tablename__="account"
@@ -63,7 +72,8 @@ def Homepage():
     if not session.get("name"):
         return redirect("/")
     else:
-        return render_template("Homepage.html")
+        rows = Products.query.all()
+        return render_template("Homepage.html",rows=rows)
 @app.route("/login_form",methods=['GET','POST'])
 def login_form():
     if request.method == 'POST':
@@ -120,6 +130,7 @@ def product():
         rows = Products.query.all()
         return render_template("products.html",rows=rows)
 
+
 @app.route('/About_Us')
 def about_us():
     if not session.get("name"):
@@ -145,7 +156,8 @@ def product_form():
             Status=request.form.get("Status_Input")
             Quantity=request.form.get("Quantity_Input")
             Check_Barcode= Products.query.filter_by(barcode=Barcode2).first()
-            if(Check_Barcode is None):
+            if(Check_Barcode is None and len(Barcode2) == 9):
+                Create_Barcode(Barcode2)
                 productss = Products(Barcode2,Product,Status,Quantity)
                 msg="Successfully_Added"
                 db.session.add(productss)
@@ -155,8 +167,29 @@ def product_form():
                 msg="Existing_Barcode"
                 return redirect(url_for('product',msg=msg))
             
+@app.route('/Profile')
+def profile():
+    if not session.get('name'):
+        return redirect("/")
+    else:
+        rows = Products.query.filter_by(barcode=yes.yepyep).first()
+        return render_template("profile.html",rows=rows)
 
-
+@app.route('/search_barcode', methods=['GET','POST'])
+def search_barcode():
+    if not session.get("name"):
+        return redirect("/")
+    else:
+        if request.method == 'POST':
+            Barcode2=request.form.get("Barcode_Input")
+            Check_Barcode= Products.query.filter_by(barcode=Barcode2).first()
+            if(Check_Barcode is None or len(Barcode2) != 9):
+                msg="There_is_no_such_Barcode"
+                return redirect(url_for('orders',msg=msg))
+            else:
+                msg=Barcode2
+                yes.yepyep=Barcode2
+                return redirect(url_for('profile',id=msg))
 
 @app.route('/Product/<id>/Delete', methods=['GET','POST'])
 def delete(id):
@@ -188,9 +221,92 @@ def update(id):
                 db.session.add(bar)
                 db.session.commit()
                 return redirect(url_for('product'))
+
+@app.route('/Profile/<id>/Add',methods=['GET','POST'])
+def profile_add(id):
+    if not session.get("name"):
+        return redirect("/")
+    else:
+        product=Products.query.get(id)
+        product_added=product.quantity+1
+        produc=product.product
+        statu=product.status
+        db.session.delete(product)
+        db.session.commit()
+
+        bar=Products(barcode=id,product=produc,status=statu,quantity=product_added)
+        db.session.add(bar)
+        db.session.commit()
+        return redirect(url_for('profile',msg="Added"))
+
+@app.route('/Profile/<id>/Sub',methods=['GET','POST'])
+def profile_sub(id):
+    product=Products.query.get(id)
+    if not session.get("name"):
+        return redirect("/")
+    elif product.quantity <= 0:
+        return redirect(url_for('profile',msg="The_Quantity_is_0"))
+    else:        
+        product_added=product.quantity-1
+        produc=product.product
+        statu=product.status
+        db.session.delete(product)
+        db.session.commit()
+
+        bar=Products(barcode=id,product=produc,status=statu,quantity=product_added)
+        db.session.add(bar)
+        db.session.commit()
+        return redirect(url_for('profile',msg="Subtracted"))
+
+@app.route('/Profile/<id>/Multiple_Add',methods=['GET','POST'])
+def multiple_add(id):
+    product=Products.query.get(id)
+    if not session.get("name"):
+        return redirect("/")
+    else:
+        new_value=request.form["Mul_Quantity"]
+        product_added=product.quantity+int(new_value)
+        produc=product.product
+        statu=product.status
+        db.session.delete(product)
+        db.session.commit()
+
+        bar=Products(barcode=id,product=produc,status=statu,quantity=product_added)
+        db.session.add(bar)
+        db.session.commit()
+        return redirect(url_for('profile',msg="Added_Multiple_Times"))
+
+@app.route('/Profile/<id>/Multiple_Sub',methods=['GET','POST'])
+def multiple_sub(id):
+    product=Products.query.get(id)
+    new_value=request.form["Mul_Sub_Quantity"]
+    if not session.get("name"):
+        return redirect("/")
+    elif int(new_value) < 0 or product.quantity < int(new_value):
+        return redirect(url_for('profile',msg="Invalid_Input"))
+    else:
+        product_added=product.quantity-int(new_value)
+        produc=product.product
+        statu=product.status
+        db.session.delete(product)
+        db.session.commit()
+
+        bar=Products(barcode=id,product=produc,status=statu,quantity=product_added)
+        db.session.add(bar)
+        db.session.commit()
+        return redirect(url_for('profile',msg="Subtracted_Multiple_Times"))
+def Create_Barcode(yes):
+    hehe= 'static/barcode/'
+    hehe2=hehe+yes+".jpeg"
+    with open(hehe2,'wb') as f:
+        Code128(yes,writer =ImageWriter()).write(f)
+
+        
+
 @app.route("/logout")
 def logout():
     session["name"] = None
     return redirect("/")
 if __name__ == "__main__":
+    yes.yepyep="a"
     app.run(host="0.0.0.0", port=8080)
